@@ -1,0 +1,222 @@
+<div>
+    <section class="row">
+        <div class="col-12 col-lg-9">
+            <div class="row">
+                <!-- Statistik Ringkas -->
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="stats-icon blue">
+                                        <i class="iconly-boldProfile"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">Total Pelanggan</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $totalUsers }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="stats-icon purple">
+                                        <i class="iconly-boldBookmark"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">Total Produk</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $totalProducts }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="stats-icon green">
+                                        <i class="iconly-boldBuy"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">Total Pesanan</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $totalOrders }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="stats-icon red">
+                                        <i class="iconly-boldHeart"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">Total Pendapatan</h6>
+                                    <h6 class="font-extrabold mb-0">Rp {{ number_format($totalRevenue ?? 0, 0, ',', '.') }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+            </div>
+
+            <!-- Chart Penjualan Harian -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Chart Penjualan Bulanan</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="dailyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pesanan Terbaru -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Pesanan Terbaru</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-lg">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Pesanan</th>
+                                            <th>Pelanggan</th>
+                                            <th>Status</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($recentOrders as $order)
+                                        <tr>
+                                            <td class="text-bold-500">#{{ $order->id }}</td>
+                                            <td class="text-bold-500">{{ $order->user->name }}</td>
+                                            <td>
+                                                @if($order->status == 'pending')
+                                                    <span class="badge bg-warning">Menunggu</span>
+                                                @elseif($order->status == 'paid' || $order->status == 'verifying')
+                                                    <span class="badge bg-success">{{ ucfirst($order->status) }}</span>
+                                                @elseif($order->status == 'failed')
+                                                    <span class="badge bg-danger">Gagal</span>
+                                                @else
+                                                    <span class="badge bg-secondary">{{ ucfirst($order->status) }}</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-bold-500">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center">
+                                                <p class="p-3 mb-0">Belum ada pesanan.</p>
+                                            </td>
+                                        </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Produk Terlaris -->
+        <div class="col-12 col-lg-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Produk Terlaris</h4>
+                </div>
+                <div class="card-body">
+                    @forelse($topProducts as $product)
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="me-2">
+                            <span class="badge bg-primary">#{{ $loop->iteration }}</span>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="font-bold mb-0">{{ $product->product_name }}</h6>
+                        </div>
+                        <div>
+                            <span class="text-muted">{{ $product->total_sold }} terjual</span>
+                        </div>
+                    </div>
+                    @empty
+                    <div class="text-center">
+                        <p class="text-muted">Belum ada data produk terjual.</p>
+                    </div>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    @push('scripts')
+    <!-- Chart.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('dailyChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: @json($salesLabels),
+                    datasets: [{
+                        label: 'Penjualan (Rp)',
+                        data: @json($salesData),
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: 'rgb(59, 130, 246)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: { font: { size: 12 } }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { font: { size: 12 } }
+                        },
+                        x: { ticks: { font: { size: 12 } } }
+                    }
+                }
+            });
+        });
+    </script>
+    @endpush
+</div>

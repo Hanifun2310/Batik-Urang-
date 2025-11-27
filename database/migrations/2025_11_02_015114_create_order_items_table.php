@@ -17,9 +17,10 @@ return new class extends Migration
         // Menghubungkan ke tabel 
         $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
 
-        // Menghubungkan ke tabel 'products'
+        // Menghubungkan ke tabel 'products' (UUID)
         // Kita pakai nullable() dan nullOnDelete() agar jika produk dihapus, data pesanan tetap ada
-        $table->foreignId('product_id')->nullable()->constrained('products')->nullOnDelete(); 
+        $table->uuid('product_id')->nullable();
+        $table->foreign('product_id')->references('id')->on('products')->nullOnDelete(); 
 
         // Info Produk (Snapshot saat checkout)
         $table->string('product_name'); // Simpan nama pro

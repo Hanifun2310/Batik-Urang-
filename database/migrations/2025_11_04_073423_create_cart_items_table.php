@@ -20,7 +20,8 @@ public function up(): void
 
         $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
-        $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+        $table->uuid('product_id');
+        $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
 
         $table->integer('quantity')->default(1); 

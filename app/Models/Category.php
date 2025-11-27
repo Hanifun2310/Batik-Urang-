@@ -10,7 +10,23 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug']; 
+    // Konfigurasi UUID
+    public $incrementing = false; // Non auto-increment
+    protected $keyType = 'string'; // Tipe primary key adalah string
+
+    protected $fillable = ['id', 'name', 'slug']; 
+    
+    // Auto-generate UUID saat create
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($model) {
+            if (empty($model->id)) {
+                $model->id = (string) Str::uuid();
+            }
+        });
+    } 
     
     public function products()
     {

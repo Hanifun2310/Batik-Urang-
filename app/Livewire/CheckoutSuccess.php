@@ -34,7 +34,7 @@ class CheckoutSuccess extends Component
 
         // WhatsApp
         $message = $this->generateWhatsAppMessage();
-        $this->whatsappLink = 'https://wa.me/6285659670362?text=' . rawurlencode($message);
+        $this->whatsappLink = 'https://wa.me/6282151636638?text=' . rawurlencode($message);
 
         // Instruksi bank
         $this->paymentInstructions = [

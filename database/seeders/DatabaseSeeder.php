@@ -19,15 +19,5 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,  // 2. Baru buat produk (butuh kategori)
             ArticleSeeder::class, // 3. Buat artikel
         ]);
-
-        // Opsional: Buat 1 user contoh jika perlu
-        // Hapus tanda komentar '//' di bawah ini jika ingin membuat user 'test@example.com'
-        /*
-        \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => Hash::make('password'), // Ganti 'password' dengan password yg aman
-        ]);
-        */
     }
 }

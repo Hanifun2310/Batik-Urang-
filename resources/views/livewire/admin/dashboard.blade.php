@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        <!-- Chart Penjualan Harian -->
+        <!-- Chart Penjualan bulanan -->
         <div class="col-12 mt-4">
             <div class="card">
                 <div class="card-header">
@@ -166,7 +166,7 @@
                 data: {
                     labels: @json($salesLabels),
                     datasets: [{
-                        label: 'Penjualan (Rp)',
+                        label: 'Penjualan',
                         data: @json($salesData),
                         borderColor: 'rgb(59, 130, 246)',
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -183,7 +183,7 @@
                     responsive: true,
                     plugins: {
                         legend: {
-                            display: true,
+                            display: false,
                             labels: { font: { size: 12 } }
                         }
                     },

@@ -31,7 +31,7 @@ class Dashboard extends Component
         // --- Grafik Penjualan per Bulan ---
         $salesData = [];
         $salesLabels = [];
-        $orderCountData = [];
+
 
         for ($i = $this->monthRange - 1; $i >= 0; $i--) {
             $month = Carbon::now()->subMonths($i);
@@ -43,15 +43,12 @@ $sales = Order::whereYear('created_at', $month->year)
     ->whereIn('status', $statusArray) // <-- filter beberapa status sekaligus
     ->sum('total_amount');
 
-$orderCount = Order::whereYear('created_at', $month->year)
-    ->whereMonth('created_at', $month->month)
-    ->whereIn('status', $statusArray) // <-- filter beberapa status sekaligus
-    ->count();
+
 
 
             $salesLabels[] = $month->format('M Y'); 
             $salesData[] = (float)$sales;
-            $orderCountData[] = $orderCount;
+
         }
 
         //  Query Produk Terlaris ---
@@ -71,7 +68,7 @@ $orderCount = Order::whereYear('created_at', $month->year)
             'recentOrders' => $recentOrders,
             'salesLabels' => $salesLabels,
             'salesData' => $salesData,
-            'orderCountData' => $orderCountData,
+
             'topProducts' => $topProducts,
         ]);
     }

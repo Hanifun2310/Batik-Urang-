@@ -2,7 +2,7 @@
 
 use App\Livewire\User\OrderList;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth; // <-- PENTING: Import Auth untuk Logout
+use Illuminate\Support\Facades\Auth; 
 use App\Livewire\Auth\Register;
 use App\Livewire\Auth\Login;
 use App\Livewire\ProductList;
@@ -67,9 +67,9 @@ Route::middleware('auth')->group(function () {
     // Rute Pesanan Saya
     Route::get('/pesanan-saya', OrderList::class)->name('orders.index');
     
-    // Rute Dashboard Lama (Jika Masih Dipakai)
+    // Rute Dashboard 
     Route::get('/dashboard', function() {
-        return redirect()->route('admin.dashboard'); // Arahkan ke dashboard admin
+        return redirect()->route('admin.dashboard'); 
     })->name('dashboard');
 });
 

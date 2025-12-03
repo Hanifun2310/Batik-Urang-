@@ -96,7 +96,7 @@
                 <div class="card-header">
                     <h4>Chart Penjualan Bulanan</h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body" wire:ignore>
                     <canvas id="dailyChart"></canvas>
                 </div>
             </div>
@@ -158,45 +158,54 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const ctx = document.getElementById('dailyChart').getContext('2d');
-
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: @json($salesLabels),
-                    datasets: [{
-                        label: 'Penjualan',
-                        data: @json($salesData),
-                        borderColor: 'rgb(59, 130, 246)',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4,
-                        pointBackgroundColor: 'rgb(59, 130, 246)',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false,
-                            labels: { font: { size: 12 } }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: { font: { size: 12 } }
-                        },
-                        x: { ticks: { font: { size: 12 } } }
-                    }
+        // Langsung jalankan script, tidak menunggu DOMContentLoaded
+        (function() {
+            // Gunakan setTimeout untuk memastikan DOM benar-benar siap
+            setTimeout(function() {
+                const canvas = document.getElementById('dailyChart');
+                if (!canvas) {
+                    console.error('Canvas dailyChart tidak ditemukan');
+                    return;
                 }
-            });
-        });
+                
+                const ctx = canvas.getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: @json($salesLabels),
+                        datasets: [{
+                            label: 'Penjualan',
+                            data: @json($salesData),
+                            borderColor: 'rgb(59, 130, 246)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: 'rgb(59, 130, 246)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false,
+                                labels: { font: { size: 12 } }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { font: { size: 12 } }
+                            },
+                            x: { ticks: { font: { size: 12 } } }
+                        }
+                    }
+                });
+            }, 100); // Delay 100ms untuk memastikan DOM siap
+        })();
     </script>
     @endpush
 </div>

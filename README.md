@@ -2,11 +2,11 @@
 
 Platform e-commerce modern untuk penjualan produk batik yang dibangun dengan Laravel Livewire. Aplikasi ini menyediakan sistem manajemen lengkap untuk produk, pesanan, pengguna, dan artikel dengan antarmuka yang interaktif dan responsif.
 
-## � Deskripsi Singkat
+## Deskripsi Singkat
 
 Batik Livewire adalah aplikasi e-commerce yang dirancang khusus untuk memudahkan penjualan produk batik secara online. Dilengkapi dengan panel admin komprehensif dan antarmuka pelanggan yang user-friendly untuk pengalaman berbelanja yang optimal.
 
-## ✨ Fitur Utama
+## Fitur Utama
 
 ### Untuk Pelanggan
 
@@ -31,7 +31,7 @@ Batik Livewire adalah aplikasi e-commerce yang dirancang khusus untuk memudahkan
 -   Autentikasi dan otorisasi role-based
 -   Middleware protection untuk route admin
 
-## 🛠️ Teknologi yang Digunakan
+## Teknologi yang Digunakan
 
 -   **Laravel Herd 12** - PHP development environment
 -   **Livewire 3.6** - Full-stack framework untuk komponen interaktif
@@ -40,7 +40,7 @@ Batik Livewire adalah aplikasi e-commerce yang dirancang khusus untuk memudahkan
 -   **Midtrans** - Payment gateway integration
 -   **MySQL** - Database management system
 
-## 📦 Cara Instalasi
+## Cara Instalasi
 
 ### Prasyarat
 
@@ -119,20 +119,20 @@ Pastikan sistem telah terinstall:
     npm run build
     ```
 
-## 🚀 Cara Menjalankan Project
+## Cara Menjalankan Project
 
 ### Metode 1: Development Mode (Recommended)
 
 Buka Sites lalu cari nama project "batik_livewire" yang terdapat pada halaman Sites lalu cari URL "http://batik_livewire.test" dan buka URL tersebut.
 
-## 🔑 Akses Aplikasi
+## Akses Aplikasi
 
 Setelah server berjalan, akses aplikasi melalui browser:
 
 -   **Frontend**: `http://batik_livewire.test`
 -   **Admin Panel**: `http://batik_livewire.test/admin/dashboard`
 
-## 📁 Struktur Project
+## Struktur Project
 
 ```
 batik_livewire/
@@ -155,7 +155,7 @@ batik_livewire/
 └── public/                # Public assets
 ```
 
-## 📝 Konfigurasi Tambahan
+## Konfigurasi Tambahan
 
 ### Midtrans Payment Gateway
 

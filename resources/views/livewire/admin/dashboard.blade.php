@@ -1,19 +1,19 @@
 <div>
     <section class="row">
-        <!-- 4 Kotak Statistik dalam 1 Baris -->
+        <!-- 3 Kotak Statistik dalam 1 Baris -->
         <div class="col-12">
             <div class="row">
                 <!-- Total Pelanggan -->
-                <div class="col-12 col-sm-6 col-lg-3">
+                <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-4 d-flex justify-content-start">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                     <div class="stats-icon blue mb-2">
                                         <i class="iconly-boldProfile"></i>
                                     </div>
                                 </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-8">
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 class="text-muted font-semibold">Total Pelanggan</h6>
                                     <h6 class="font-extrabold mb-0">{{ $totalUsers }}</h6>
                                 </div>
@@ -23,16 +23,16 @@
                 </div>
 
                 <!-- Total Produk -->
-                <div class="col-12 col-sm-6 col-lg-3">
+                <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-4 d-flex justify-content-start">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                     <div class="stats-icon purple mb-2">
                                         <i class="iconly-boldBookmark"></i>
                                     </div>
                                 </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-8">
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 class="text-muted font-semibold">Total Produk</h6>
                                     <h6 class="font-extrabold mb-0">{{ $totalProducts }}</h6>
                                 </div>
@@ -42,16 +42,16 @@
                 </div>
 
                 <!-- Total Pesanan -->
-                <div class="col-12 col-sm-6 col-lg-3">
+                <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-4 d-flex justify-content-start">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                     <div class="stats-icon green mb-2">
                                         <i class="iconly-boldBuy"></i>
                                     </div>
                                 </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-8">
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 class="text-muted font-semibold">Total Pesanan</h6>
                                     <h6 class="font-extrabold mb-0">{{ $totalOrders }}</h6>
                                 </div>
@@ -59,33 +59,33 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Produk Terlaris -->
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Produk Terlaris</h4>
+        <!-- Produk Terlaris (Baris Terpisah) -->
+        <div class="col-12 mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Produk Terlaris</h4>
+                </div>
+                <div class="card-body">
+                    @forelse($topProducts as $product)
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="me-2">
+                            <span class="badge bg-primary">#{{ $loop->iteration }}</span>
                         </div>
-                        <div class="card-body">
-                            @forelse($topProducts as $product)
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <div class="me-2">
-                                    <span class="badge bg-primary">#{{ $loop->iteration }}</span>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="font-bold mb-0" style="font-size: 0.85rem;">{{ Str::limit($product->product_name, 20) }}</h6>
-                                </div>
-                                <div>
-                                    <span class="text-muted" style="font-size: 0.75rem;">{{ $product->total_sold }}</span>
-                                </div>
-                            </div>
-                            @empty
-                            <div class="text-center">
-                                <p class="text-muted">Belum ada data produk terjual.</p>
-                            </div>
-                            @endforelse
+                        <div class="flex-grow-1">
+                            <h6 class="font-bold mb-0" style="font-size: 0.85rem;">{{ Str::limit($product->product_name, 40) }}</h6>
+                        </div>
+                        <div>
+                            <span class="badge bg-light-primary">{{ $product->total_sold }} terjual</span>
                         </div>
                     </div>
+                    @empty
+                    <div class="text-center py-3">
+                        <p class="text-muted mb-0">Belum ada data produk terjual.</p>
+                    </div>
+                    @endforelse
                 </div>
             </div>
         </div>

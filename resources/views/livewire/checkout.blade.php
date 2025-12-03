@@ -1,8 +1,8 @@
 <div> {{-- Elemen root wajib --}}
     @section('title', 'Checkout')
 
-    <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold text-amber-900 mb-8">Checkout Pesanan</h1>
+    <main class="max-w-6xl mx-auto py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+        <h1 class="text-2xl sm:text-3xl font-bold text-amber-900 mb-6 sm:mb-8">Checkout Pesanan</h1>
 
         {{-- Menampilkan error (Seperti Stok Habis dari SweetAlert) --}}
         {{-- Kita sudah menggunakan SweetAlert, tapi ini bisa jadi fallback --}}

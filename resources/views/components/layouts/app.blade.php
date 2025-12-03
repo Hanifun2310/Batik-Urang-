@@ -12,7 +12,7 @@
     @livewireStyles
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 min-h-screen flex flex-col">
 
     <nav class="bg-amber-900 text-white sticky top-0 z-50 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -102,7 +102,7 @@
 
 
     {{-- Konten Utama Halaman  --}}
-    <main>
+    <main class="flex-grow">
         {{ $slot }}
     </main>
 

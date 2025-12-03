@@ -52,10 +52,13 @@ $sales = Order::whereYear('created_at', $month->year)
         }
 
         //  Query Produk Terlaris ---
+        // Array status yang dihitung sebagai penjualan valid
+        $validStatuses = ['verifying', 'paid', 'processed', 'shipped', 'delivered'];
+        
         $topProducts = OrderItem::query()
             ->select('product_name', DB::raw('SUM(quantity) as total_sold'))
             ->join('orders', 'order_items.order_id', '=', 'orders.id')
-            ->where('orders.status', 'paid')
+            ->whereIn('orders.status', $validStatuses)
             ->groupBy('product_name')
             ->orderByDesc('total_sold')
             ->take(5)

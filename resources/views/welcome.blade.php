@@ -10,20 +10,20 @@
 
     {{-- homepage --}}
 
-    <section class="bg-gradient-to-r from-amber-900 to-amber-700 text-white py-12 sm:py-20">
+    <section class="bg-gradient-to-r from-amber-900 to-amber-700 text-white py-16 sm:py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
-                <h1 class="text-3xl sm:text-5xl font-bold mb-4">Batik</h1>
-                <p class="text-lg sm:text-xl text-amber-100 mb-8">Warisan Budaya Dunia yang Membanggakan</p>
-                <p class="text-sm sm:text-base text-amber-50 max-w-2xl mx-auto">Dapatkan keindahan dan makna mendalam di balik setiap motif batik di Website kami</p>
+                <h1 class="text-4xl sm:text-5xl font-bold mb-4">Batik</h1>
+                <p class="text-lg sm:text-xl text-amber-100 mb-6 sm:mb-8">Warisan Budaya Dunia yang Membanggakan</p>
+                <p class="text-base sm:text-lg text-amber-50 max-w-2xl mx-auto">Dapatkan keindahan dan makna mendalam di balik setiap motif batik di Website kami</p>
             </div>
         </div>
     </section>
 
     <section class="py-12 sm:py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl sm:text-4xl font-bold text-amber-900 mb-4 text-center">Koleksi Terbaru</h2>
-            <p class="text-center text-gray-600 mb-12">Produk batik pilihan terbaru kami</p>
+            <h2 class="text-2xl sm:text-4xl font-bold text-amber-900 mb-3 sm:mb-4 text-center">Koleksi Terbaru</h2>
+            <p class="text-center text-gray-600 mb-8 sm:mb-12">Produk batik pilihan terbaru kami</p>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 

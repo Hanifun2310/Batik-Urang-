@@ -26,13 +26,13 @@ Route::get('/', function () {
 Route::get('/register', Register::class)->name('register');
 Route::get('/login', Login::class)->name('login');
 
-// Rute Logout (Perbaikan Error)
+// Rute Logout 
 Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
     return redirect('/');
-})->name('logout'); // <-- Rute yang hilang
+})->name('logout'); 
 
 // Rute Public 
 require __DIR__.'/public.php';

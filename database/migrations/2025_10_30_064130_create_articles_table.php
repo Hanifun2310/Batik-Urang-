@@ -20,9 +20,6 @@ return new class extends Migration
 
         $table->string('status')->default('draft'); 
 
-        // Opsional: Kolom Penulis (jika ingin dihubungkan ke tabel users)
-        // $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
-
         $table->timestamps(); 
         });
     }

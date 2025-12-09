@@ -13,8 +13,6 @@ return new class extends Migration
     {
     Schema::create('order_items', function (Blueprint $table) {
         $table->uuid('id')->primary(); // ID item pesanan menggunakan UUID
-
-        // Menghubungkan ke tabel orders (UUID)
         $table->uuid('order_id');
         $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
 

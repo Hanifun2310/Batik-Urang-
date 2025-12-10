@@ -1,9 +1,8 @@
 <div>
     <section class="row">
-        <!-- 3 Kotak Statistik dalam 1 Baris -->
+
         <div class="col-12">
             <div class="row">
-                <!-- Total Pelanggan -->
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
@@ -62,7 +61,6 @@
             </div>
         </div>
 
-        <!-- Produk Terlaris (Baris Terpisah) -->
         <div class="col-12 mt-4">
             <div class="card">
                 <div class="card-header">
@@ -154,13 +152,11 @@
     </section>
 
     @push('scripts')
-    <!-- Chart.js CDN -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 
     <script>
-        // Langsung jalankan script, tidak menunggu DOMContentLoaded
         (function() {
-            // Gunakan setTimeout untuk memastikan DOM benar-benar siap
             setTimeout(function() {
                 const canvas = document.getElementById('dailyChart');
                 if (!canvas) {
@@ -204,7 +200,7 @@
                         }
                     }
                 });
-            }, 100); // Delay 100ms untuk memastikan DOM siap
+            }, 100);
         })();
     </script>
     @endpush

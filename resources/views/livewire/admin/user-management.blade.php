@@ -59,7 +59,7 @@
         </section>
     </div>
 
-    {{-- MODAL RESET PASSWORD --}}
+
     @if($isResetModalOpen && $selectedUser)
         <div class="modal-backdrop fade show"></div>
         <div class="modal fade show" id="resetModal" tabindex="-1" style="display: block;">

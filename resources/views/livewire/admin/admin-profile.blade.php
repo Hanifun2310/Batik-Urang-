@@ -7,7 +7,7 @@
         <section class="section">
             <div class="row">
 
-                <!-- KOLOM 1: UPDATE PROFIL -->
+
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">

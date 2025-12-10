@@ -11,13 +11,13 @@
 
     {{-- homepage --}}
 
-    <section class="relative bg-gradient-to-r from-amber-900 to-amber-700 text-white py-16 sm:py-20 overflow-hidden">
+    <section class="relative bg-linear-to-r from-amber-900 to-amber-700 text-white py-16 sm:py-20 overflow-hidden">
         <!-- Background Image -->
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('images/batik-hero-bg.png') }}" alt="Batik Background"
                 class="w-full h-full object-cover opacity-90">
             <!-- Overlay untuk meningkatkan keterbacaan teks -->
-            <div class="absolute inset-0 bg-gradient-to-r from-amber-900/60 to-amber-800/60"></div>
+            <div class="absolute inset-0 bg-linear-to-r from-amber-900/60 to-amber-800/60"></div>
         </div>
 
         <!-- Content -->
@@ -48,8 +48,8 @@
                             <img src="{{ $product->main_image_url ? asset('storage/' . $product->main_image_url) : 'https://via.placeholder.com/400x300.png?text=No+Image' }}"
                                 alt="{{ $product->name }}" class="w-full h-64 object-cover">
                         </a>
-                        <div class="p-4 flex flex-col flex-grow">
-                            <h3 class="font-bold text-amber-900 text-lg mb-2 flex-grow">
+                        <div class="p-4 flex flex-col grow">
+                            <h3 class="font-bold text-amber-900 text-lg mb-2 grow">
                                 <a href="{{ route('products.show', $product->id) }}" wire:navigate
                                     class="hover:underline">
                                     {{ $product->name }}
@@ -101,7 +101,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                         <!-- Info Item Alamat -->
                         <div class="flex items-start space-x-4">
-                            <div class="flex-shrink-0">
+                            <div class="shrink-0">
                                 <span
                                     class="flex items-center justify-center h-12 w-12 rounded-full bg-amber-100 text-amber-700">
                                     <!-- Ikon SVG untuk Peta -->
@@ -124,7 +124,7 @@
 
                         <!-- Info Item Telepon -->
                         <div class="flex items-start space-x-4">
-                            <div class="flex-shrink-0">
+                            <div class="shrink-0">
                                 <span
                                     class="flex items-center justify-center h-12 w-12 rounded-full bg-amber-100 text-amber-700">
                                     <!-- Ikon SVG untuk Telepon -->
@@ -144,7 +144,7 @@
 
                         <!-- Info Item Email -->
                         <div class="flex items-start space-x-4">
-                            <div class="flex-shrink-0">
+                            <div class="shrink-0">
                                 <span
                                     class="flex items-center justify-center h-12 w-12 rounded-full bg-amber-100 text-amber-700">
                                     <!-- Ikon SVG untuk Email -->

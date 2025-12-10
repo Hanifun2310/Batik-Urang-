@@ -50,7 +50,7 @@
                         <img src="{{ $product->main_image_url ?? 'https://via.placeholder.com/400x300.png?text=No+Image' }}"
                             alt="{{ $product->name }}" class="w-full h-48 object-cover">
                     </a>
-                    <div class="p-4 flex flex-col flex-grow">
+                    <div class="p-4 flex flex-col grow">
                         <h3 class="font-bold text-amber-900 text-lg mb-2 flex-grow"> {{ $product->name }} </h3>
                         <p class="text-gray-700 text-md font-semibold mb-2"> Rp
                             {{ number_format($product->price, 0, ',', '.') }} </p>

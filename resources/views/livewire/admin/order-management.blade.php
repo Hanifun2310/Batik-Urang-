@@ -81,7 +81,7 @@
         </div>
     </section>
 
-    {{-- MODAL DETAIL PESANAN --}}
+    {{-- DETAIL PESANAN --}}
     @if($isDetailModalOpen && $selectedOrder)
         <div class="modal-backdrop fade show"></div>
         <div class="modal fade show" id="orderDetailModal" tabindex="-1" style="display: block;">

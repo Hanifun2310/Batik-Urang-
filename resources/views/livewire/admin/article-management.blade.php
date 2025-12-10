@@ -14,7 +14,6 @@
                 </div>
                 <div class="card-body">
 
-                    <!-- Search & Pagination -->
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <input type="text" class="form-control" placeholder="Cari Judul atau Isi Artikel..." wire:model.live.debounce.300ms="search">
@@ -38,7 +37,6 @@
                                 <tr>
                                     <td class="text-bold-500">{{ $article->id }}</td>
                                     <td>
-                                        <!-- PERBAIKAN #1: Menggunakan kolom 'featured_image_url' -->
                                         @if($article->featured_image_url)
                                             <img src="{{ asset('storage/' . $article->featured_image_url) }}" alt="Cover" class="rounded" style="width: 50px; height: 50px; object-fit: cover;">
                                         @else
@@ -46,9 +44,8 @@
                                         @endif
                                     </td>
                                     <td>{{ Str::limit($article->title, 50) }}</td>
-                                    {{-- <td><span class="badge bg-light-secondary">{{ $article->slug }}</span></td> --}}
                                     <td>
-                                        <!-- PERBAIKAN #2: Membaca status string dari DB -->
+
                                         @if($article->status == 'published')
                                             <span class="badge bg-success">Dipublikasikan</span>
                                         @else
@@ -78,7 +75,7 @@
         </section>
     </div>
 
-    {{-- MODAL TAMBAH/EDIT ARTIKEL --}}
+
     @if($isModalOpen)
         <div class="modal-backdrop fade show"></div>
         <div class="modal fade show" id="articleModal" tabindex="-1" style="display: block;">
@@ -92,7 +89,7 @@
                         
                         <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                             <div class="row">
-                                {{-- KIRI: JUDUL, SLUG, KONTEN --}}
+
                                 <div class="col-md-8">
                                     {{-- Judul --}}
                                     <div class="mb-3">
@@ -110,16 +107,13 @@
                                     </div>
                                 </div>
 
-                                {{-- KANAN: GAMBAR & STATUS --}}
                                 <div class="col-md-4">
                                     {{-- Gambar Cover --}}
                                     <div class="mb-3">
                                         <label for="coverImage" class="form-label">Gambar Cover</label>
-                                        <!-- Menggunakan properti 'coverImage' dari PHP -->
                                         <input type="file" class="form-control @error('coverImage') is-invalid @enderror" wire:model="coverImage" id="coverImage">
                                         @error('coverImage') <div class="invalid-feedback">{{ $message }}</div> @enderror
 
-                                        {{-- Preview Gambar Baru --}}
                                         @if ($coverImage)
                                             <p class="mt-2">Preview Gambar Baru:</p>
                                             <img src="{{ $coverImage->temporaryUrl() }}" class="img-fluid rounded shadow-sm" style="max-height: 150px;">
@@ -131,10 +125,8 @@
                                             <small class="d-block text-muted">Akan diganti jika Anda mengunggah yang baru.</small>
                                         @endif
 
-                                    {{-- PERBAIKAN #2: Status Publikasi (Dropdown) --}}
                                     <div class="mb-3">
                                         <label for="statusSelect" class="form-label">Status Publikasi</label>
-                                        <!-- Menggunakan properti 'status' (string) dari PHP -->
                                         <select id="statusSelect" class="form-select" wire:model="status">
                                             <option value="draft">Draft (Tidak Tampil)</option>
                                             <option value="published">Dipublikasikan (Tampil)</option>

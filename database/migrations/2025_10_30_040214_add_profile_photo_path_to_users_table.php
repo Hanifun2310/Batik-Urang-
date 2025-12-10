@@ -12,7 +12,6 @@ return new class extends Migration
 public function up(): void
 {
     Schema::table('users', function (Blueprint $table) {
-        //  kolom setelah phone_numbee
         $table->string('profile_photo_path', 2048)->nullable()->after('phone_number'); 
     });
 }

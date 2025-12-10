@@ -23,7 +23,6 @@ class Register extends Component
     #[Validate]
     public $password = '';
 
-    // Tidak perlu validasi eksplisit di sini, karena aturan 'confirmed' di password otomatis mengecek ini
     public $password_confirmation = '';
 
     /**

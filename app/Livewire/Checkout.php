@@ -103,7 +103,7 @@ class Checkout extends Component
                 'payment_proof_path' => null,
             ]);
 
-            // 5. Simpan Order Items & Kurangi Stok
+            // fugsi untuk Simpan Order Items & Kurangi Stok
             foreach ($cartItems as $item) {
                 OrderItem::create([
                     'order_id'          => $order->id,
@@ -115,7 +115,6 @@ class Checkout extends Component
                 $item->product->decrement('stock_quantity', $item->quantity);
             }
 
-            // 6. Hapus Keranjang
             CartItem::where('user_id', Auth::id())->delete();
             $this->dispatch('cart-updated'); 
 

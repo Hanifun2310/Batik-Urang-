@@ -17,20 +17,19 @@ class OrderManagement extends Component
 {
     use WithPagination;
 
-    // Properti untuk filter & pencarian
+
     public $search = '';
-    public $statusFilter = ''; // Filter berdasarkan status
+    public $statusFilter = ''; 
     public $perPage = 10;
 
-    // Properti untuk Modal Detail Pesanan
+    // Properti  Detail Pesanan
     public $isDetailModalOpen = false;
     public $selectedOrder = null;
     
-    // Properti untuk Update Status
+    // untuk Update Status
     #[Validate('required|string')]
     public $newStatus = '';
     
-    // Status yang tersedia untuk diupdate
     public $availableStatuses = [
         'pending' => 'Menunggu Pembayaran', 
         'verifying' => 'Verifikasi Pembayaran', 
@@ -41,13 +40,11 @@ class OrderManagement extends Component
         'canceled' => 'Dibatalkan'
     ];
 
-    // Fungsi Utama: Mengambil data pesanan
     public function getOrdersProperty()
     {
         return Order::query()
-            ->with(['user']) // Ambil data user pelanggan
+            ->with(['user']) 
             ->when($this->search, function ($query) {
-                // Cari berdasarkan ID Pesanan atau Nama Pelanggan
                 $query->where('id', 'like', '%'.$this->search.'%')
                       ->orWhereHas('user', function ($q) {
                           $q->where('name', 'like', '%'.$this->search.'%');
@@ -56,26 +53,24 @@ class OrderManagement extends Component
             ->when($this->statusFilter, function ($query) {
                 $query->where('status', $this->statusFilter);
             })
-            ->latest() // Urutkan dari yang terbaru
+            ->latest() 
             ->paginate($this->perPage);
     }
     
-    // Reset Filter
+
     public function resetFilters()
     {
         $this->reset(['search', 'statusFilter']);
     }
     
-    // FUNGSI: Membuka modal detail
     public function showDetailModal($orderId)
     {
-        // Ambil relasi yang diperlukan untuk detail
+
         $this->selectedOrder = Order::with(['user', 'items.product'])->findOrFail($orderId);
-        $this->newStatus = $this->selectedOrder->status; // Set status saat ini
+        $this->newStatus = $this->selectedOrder->status; 
         $this->isDetailModalOpen = true;
     }
 
-    // FUNGSI: Menutup modal detail
     public function closeDetailModal()
     {
         $this->isDetailModalOpen = false;
@@ -83,37 +78,33 @@ class OrderManagement extends Component
         $this->newStatus = '';
     }
 
-    // FUNGSI: Mengubah Status Pesanan
     public function updateStatus()
     {
         if (!$this->selectedOrder) {
             return;
         }
         
-        // Validasi status baru
         $this->validate([
             'newStatus' => 'required|in:' . implode(',', array_keys($this->availableStatuses)),
         ]);
-
-        // Update status di database
         $this->selectedOrder->update(['status' => $this->newStatus]);
         
-        // Kirim notifikasi Toast
+
         $statusLabel = $this->availableStatuses[$this->newStatus];
         $this->dispatch('success-alert', ['message' => 'Status Pesanan #' . $this->selectedOrder->id . ' berhasil diubah menjadi ' . $statusLabel . '.']);
         
-        // Tutup modal, bersihkan properti, dan refresh tabel
+
         $this->closeDetailModal();
-        $this->gotoPage(1); // Kembali ke halaman 1 setelah update
+        $this->gotoPage(1); 
     }
 
 
     public function render()
     {
-        // Menggunakan property getOrdersProperty()
+
         return view('livewire.admin.order-management', [
             'orders' => $this->orders,
-            'availableStatuses' => $this->availableStatuses, // Kirim status ke view
+            'availableStatuses' => $this->availableStatuses, 
         ]);
     }
 }

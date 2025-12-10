@@ -23,7 +23,6 @@ class UserManagement extends Component
     public $isResetModalOpen = false;
     public $selectedUser = null;
 
-    // Properti yang divalidasi untuk password baru
     #[Validate('required|min:8')]
     public $newPassword = '';
 
@@ -34,22 +33,22 @@ class UserManagement extends Component
         return User::query()
             ->when($this->search, function ($query) {
                 $query->where('name', 'like', '%'.$this->search.'%')
-                      ->orWhere('email', 'like', '%'.$this->search.'%');
+                        ->orWhere('email', 'like', '%'.$this->search.'%');
             })
             ->latest()
             ->paginate($this->perPage);
     }
     
-    // FUNGSI: Membuka modal reset
+
     public function showResetModal($userId)
     {
         $this->selectedUser = User::findOrFail($userId);
         $this->resetErrorBag();
-        $this->newPassword = ''; // Kosongkan input password
+        $this->newPassword = ''; 
         $this->isResetModalOpen = true;
     }
 
-    // FUNGSI: Menutup modal reset
+
     public function closeResetModal()
     {
         $this->isResetModalOpen = false;
@@ -57,25 +56,24 @@ class UserManagement extends Component
         $this->newPassword = '';
     }
 
-    // FUNGSI: Reset Password (HANYA admin yang bisa)
+
     public function resetPassword()
     {
         if (!$this->selectedUser) {
             return;
         }
 
-        // Validasi input password baru
+
         $this->validate();
 
-        // Update password pengguna (Laravel akan otomatis me-HASH password)
+
         $this->selectedUser->update([
             'password' => Hash::make($this->newPassword),
         ]);
         
-        // Kirim notifikasi Toast
+
         $this->dispatch('success-alert', ['message' => 'Password pengguna ' . $this->selectedUser->email . ' berhasil direset.']);
-        
-        // Tutup modal
+
         $this->closeResetModal();
     }
 

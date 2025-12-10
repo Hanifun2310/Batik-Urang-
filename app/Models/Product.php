@@ -4,18 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo; // Impor BelongsTo
-use Illuminate\Support\Str; // Import Str untuk UUID
+use Illuminate\Database\Eloquent\Relations\BelongsTo; 
+use Illuminate\Support\Str; 
 
 class Product extends Model
 {
     use HasFactory;
 
-    // Konfigurasi UUID
-    public $incrementing = false; // Non auto-increment
-    protected $keyType = 'string'; // Tipe primary key adalah string
+    public $incrementing = false; 
+    protected $keyType = 'string'; 
 
-    // Kolom yang boleh diisi massal
     protected $fillable = [
         'id',
         'name',
@@ -24,10 +22,10 @@ class Product extends Model
         'stock_quantity',
         'main_image_url',
         'size_chart_note',
-        'category_id', // Jangan lupa tambahkan category_id
+        'category_id', 
     ];
 
-    // Auto-generate UUID saat create
+
     protected static function boot()
     {
         parent::boot();
@@ -39,7 +37,6 @@ class Product extends Model
         });
     }
 
-    // Definisikan relasi ke Category (opsional tapi bagus)
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

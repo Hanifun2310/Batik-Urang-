@@ -48,15 +48,12 @@ class AdminProfile extends Component
                 'required',
                 'email',
                 'max:255',
-                // Pastikan email unik, KECUALI untuk user ID saat ini
                 Rule::unique('users')->ignore($user->id),
             ],
         ]);
 
-        // Simpan perubahan
         $user->update($validatedData);
 
-        // Kirim notifikasi SweetAlert
         $this->dispatch('success-alert', ['message' => 'Informasi profil berhasil diperbarui.']);
     }
 
@@ -70,7 +67,6 @@ class AdminProfile extends Component
 
         // Validasi
         $validatedData = $this->validate([
-            // 1. Cek apakah password saat ini cocok
             'current_password' => [
                 'required',
                 function ($attribute, $value, $fail) use ($user) {
@@ -79,21 +75,19 @@ class AdminProfile extends Component
                     }
                 },
             ],
-            // 2. Validasi password baru
+
             'new_password' => [
                 'required',
                 'string',
-                Password::min(8)->mixedCase()->numbers(), // Standar keamanan: min 8, huruf besar/kecil, angka
-                'confirmed', // Otomatis cek 'new_password_confirmation'
+                Password::min(8)->mixedCase()->numbers(), 
+                'confirmed',
             ],
         ]);
 
-        // Simpan password baru (Laravel akan otomatis Hash)
         $user->update([
             'password' => Hash::make($this->new_password),
         ]);
 
-        // Reset field password & kirim notifikasi
         $this->reset(['current_password', 'new_password', 'new_password_confirmation']);
         $this->dispatch('success-alert', ['message' => 'Password berhasil diubah.']);
     }

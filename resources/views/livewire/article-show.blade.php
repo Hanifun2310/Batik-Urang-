@@ -1,4 +1,4 @@
-<div> {{-- Elemen root wajib --}}
+<div> 
 
     <main class="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
 
@@ -14,7 +14,6 @@
         </p>
 
         <div class="prose prose-lg max-w-none text-gray-800 leading-relaxed">
-            {{-- Kita gunakan nl2br() untuk menghormati baris baru, atau bisa pakai Trix/Markdown --}}
             {!! nl2br(e($article->content)) !!}
         </div>
 

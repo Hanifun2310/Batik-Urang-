@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 #[Layout('components.layouts.admin')] 
 class Dashboard extends Component
 {
-    // Tambahan: untuk dropdown filter range bulan
     public $monthRange = 12;
 
     public function render()
@@ -28,19 +27,17 @@ class Dashboard extends Component
                                 ->take(5)     
                                 ->get();
 
-        // --- Grafik Penjualan per Bulan ---
         $salesData = [];
         $salesLabels = [];
 
 
         for ($i = $this->monthRange - 1; $i >= 0; $i--) {
             $month = Carbon::now()->subMonths($i);
-// Array status yang ingin dihitung
 $statusArray = ['verifying', 'paid', 'processed', 'shipped', 'delivered'];
 
 $sales = Order::whereYear('created_at', $month->year)
     ->whereMonth('created_at', $month->month)
-    ->whereIn('status', $statusArray) // <-- filter beberapa status sekaligus
+    ->whereIn('status', $statusArray) 
     ->sum('total_amount');
 
 
@@ -51,8 +48,6 @@ $sales = Order::whereYear('created_at', $month->year)
 
         }
 
-        //  Query Produk Terlaris ---
-        // Array status yang dihitung sebagai penjualan valid
         $validStatuses = ['verifying', 'paid', 'processed', 'shipped', 'delivered'];
         
         $topProducts = OrderItem::query()

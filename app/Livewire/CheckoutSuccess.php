@@ -29,14 +29,14 @@ class CheckoutSuccess extends Component
             abort(404);
         }
 
-        $order->load('items.product'); // Load relasi item & produk
+        $order->load('items.product');
         $this->order = $order;
 
         // WhatsApp
         $message = $this->generateWhatsAppMessage();
         $this->whatsappLink = 'https://wa.me/6282151636638?text=' . rawurlencode($message);
 
-        // Instruksi bank
+        // pesann untuk yang  transfer manual 
         $this->paymentInstructions = [
             'Bank' => 'BCA',
             'No. Rekening' => '123-456-7890',
@@ -77,7 +77,7 @@ class CheckoutSuccess extends Component
             'paymentProofFile' => 'required|image|max:2048'
         ]);
 
-        // Hapus file lama
+        // untuk hapus file lama
         if ($this->order->payment_proof_path && Storage::disk('public')->exists($this->order->payment_proof_path)) {
             Storage::disk('public')->delete($this->order->payment_proof_path);
         }

@@ -1,11 +1,9 @@
-<div> {{-- Elemen root wajib --}}
+<div> 
     @section('title', 'Checkout')
 
     <main class="max-w-6xl mx-auto py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
         <h1 class="text-2xl sm:text-3xl font-bold text-amber-900 mb-6 sm:mb-8">Checkout Pesanan</h1>
 
-        {{-- Menampilkan error (Seperti Stok Habis dari SweetAlert) --}}
-        {{-- Kita sudah menggunakan SweetAlert, tapi ini bisa jadi fallback --}}
         @if (session()->has('error'))
             <div class="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
                 <strong class="font-bold">Terjadi Kesalahan!</strong>
@@ -13,12 +11,11 @@
             </div>
         @endif
 
-        {{-- Form utama membungkus kedua kolom --}}
-        <!-- 1. Form terhubung ke 'placeOrder' (yang sekarang akan meminta token) -->
+
         <form wire:submit="placeOrder">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-12">
 
-                <!-- KOLOM 1: Alamat Pengiriman (Tidak Berubah) -->
+
                 <div class="bg-white rounded-lg shadow-lg p-6 space-y-4">
                     <h2 class="text-2xl font-semibold text-gray-800 border-b pb-3 mb-4">1. Alamat Pengiriman</h2>
 
@@ -68,31 +65,28 @@
                     </div>
                 </div>
 
-                <!-- KOLOM 2: Ringkasan Pesanan (Perbaikan di sini) -->
+
                 <div class="mt-8 lg:mt-0">
                     <div class="bg-white rounded-lg shadow-lg p-6">
                         <h2 class="text-2xl font-semibold text-gray-800 border-b pb-3 mb-4">2. Ringkasan Pesanan</h2>
 
                         {{-- Daftar Item Keranjang --}}
                         <div class="space-y-4 max-h-64 overflow-y-auto pr-2">
-                            <!-- [PERBAIKAN] Menggunakan '$cartItems as $item' (bukan '$id => $item') -->
                             @forelse ($cartItems as $item)
-                                {{-- Pastikan produk terkait masih ada --}}
                                 @if ($item->product)
                                     <div class="flex items-center space-x-4">
 
-                                        <!-- [PERBAIKAN FOTO] Menggunakan sintaks Objek dan asset('storage/...') -->
                                         <img src="{{ $item->product->main_image_url ? asset('storage/' . $item->product->main_image_url) : 'https://via.placeholder.com/100x100.png?text=N/A' }}"
                                             alt="{{ $item->product->name }}"
-                                            class="w-16 h-16 object-cover rounded-md flex-shrink-0">
+                                            class="w-16 h-16 object-cover rounded-md shrink-0">
 
-                                        <div class="flex-grow">
-                                            <!-- [PERBAIKAN] Menggunakan sintaks Objek -->
+                                        <div class="grow">
+
                                             <p class="font-semibold text-gray-900">{{ $item->product->name }}</p>
                                             <p class="text-sm text-gray-500">Jumlah: {{ $item->quantity }}</p>
                                         </div>
 
-                                        <!-- [PERBAIKAN SUBTOTAL] Menggunakan sintaks Objek -->
+
                                         <p class="text-sm font-medium text-gray-700">
                                             Rp {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}
                                         </p>
@@ -122,11 +116,10 @@
 
                         {{-- Tombol Buat Pesanan --}}
                         <div class="mt-6">
-                            <!-- 2. Tombol ini memicu 'placeOrder' -->
                             <button type="submit"
                                 class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-lg transition text-lg shadow-md"
                                 wire:loading.attr="disabled" wire:target="placeOrder">
-                                <!-- Target loading ke 'placeOrder' -->
+
 
                                 <span wire:loading.remove wire:target="placeOrder">Bayar Sekarang</span>
                                 <span wire:loading wire:target="placeOrder">Memproses...</span>

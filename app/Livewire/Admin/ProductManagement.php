@@ -34,38 +34,36 @@ class ProductManagement extends Component
     #[Validate('nullable|string')]
     public $description;
 
-    #[Validate('nullable|image|max:1024')] // Validasi photo: (hanya untuk UPLOAD BARU)
+    #[Validate('nullable|image|max:1024')] 
     public $photo;
 
     #[Validate('nullable|string')]
     public $size_chart_note;
 
-    // --- ProOPERTI BARU UNTUK EDIT ---
-    public $productId = null;       // 2. Untuk menyimpan ID produk yang diedit
-    public $oldPhotoPath = null;    // 3. Untuk menyimpan path gambar lama (untuk preview)
-    public $modalTitle = 'Tambah Produk Baru'; // 4. Untuk judul modal dinamis
 
-    // --- Properti Modal ---
+    public $productId = null;       
+    public $oldPhotoPath = null;    
+    public $modalTitle = 'Tambah Produk Baru'; 
+
+
     public $isModalOpen = false;
 
-    // --- 5. FUNGSI BARU: Membuka modal untuk CREATE ---
+
     public function showCreateModal()
     {
-        $this->reset(); // Reset semua properti
+        $this->reset(); 
         $this->resetErrorBag();
         $this->modalTitle = 'Tambah Produk Baru';
         $this->isModalOpen = true;
     }
 
-    // --- 6. FUNGSI BARU: Membuka modal untuk EDIT ---
     public function showEditModal($id)
     {
-        $this->reset(); // Reset dulu
+        $this->reset(); 
         $this->resetErrorBag();
         
-        $product = Product::findOrFail($id); // Cari produk, atau gagal
+        $product = Product::findOrFail($id); 
         
-        // 6a. Isi semua properti form
         $this->productId = $product->id;
         $this->name = $product->name;
         $this->category_id = $product->category_id;
@@ -73,40 +71,36 @@ class ProductManagement extends Component
         $this->stock_quantity = $product->stock_quantity;
         $this->description = $product->description;
         $this->size_chart_note = $product->size_chart_note;
-        $this->oldPhotoPath = $product->main_image_url; // Simpan path gambar lama
+        $this->oldPhotoPath = $product->main_image_url; 
 
-        // Atur modal dan buka
         $this->modalTitle = 'Edit Produk: ' . $product->name;
         $this->isModalOpen = true;
     }
     
-    // ---UNGSI CLOSE MODAL (Update) ---
+
     public function closeModal()
     {
         $this->isModalOpen = false;
-        $this->reset(); // Reset akan menghapus semua properti (termasuk productId)
+        $this->reset(); 
     }
 
     public $itemToDelete = null;
 
-// FUNGSI BARU: Untuk memicu dialog SweetAlert dari Livewire
 public function confirmDelete($id)
 {
-    $this->itemToDelete = $id; // Simpan ID di properti
-    // Kirim event ke JavaScript untuk menampilkan SweetAlert
+    $this->itemToDelete = $id; 
+
     $this->dispatch('show-delete-confirmation'); 
 }
 
     // --- FUNGSI SAVE ---
-// --- FUNGSI SAVE YANG BENAR ---
     public function save()
     {
-        // 1. Validasi
+
         $this->validate();
 
         $imagePath = $this->oldPhotoPath; 
 
-        // 2. Logika Upload Gambar
         if ($this->photo) {
             $imagePath = $this->photo->store('products', 'public');
             if ($this->oldPhotoPath) {
@@ -114,7 +108,7 @@ public function confirmDelete($id)
             }
         }
 
-        // 3. Siapkan data
+
         $data = [
             'name' => $this->name,
             'category_id' => $this->category_id,
@@ -125,7 +119,7 @@ public function confirmDelete($id)
             'size_chart_note' => $this->size_chart_note,
         ];
 
-        // 4. Logika PINTAR: Update atau Create?
+
         if ($this->productId) {
             // MODE UPDATE
             $product = Product::find($this->productId);
@@ -137,40 +131,34 @@ public function confirmDelete($id)
             $message = 'Produk berhasil ditambahkan.';
         }
 
-        // 5. Kirim SweetAlert (Hanya Sekali)
+
         $this->dispatch('success-alert', ['message' => $message]);
 
-        // 6. Tutup modal (Hanya Sekali)
+
         $this->closeModal();
     }
 
     
 
-    // ---FUNGSI BARU: HAPUS PRODUK ---
-// app/Livewire/Admin/ProductManagement.php
 
-// ...
-
-// FUNGSI DELETE (DIJALANKAN OLEH EVENT 'delete-confirmed')
+// FUNGSI DELETE 
 #[On('delete-confirmed')]
 public function delete()
 {
-    // Cek jika ID tersedia dan merupakan ID produk
+
     if ($this->itemToDelete) {
         $product = Product::findOrFail($this->itemToDelete);
         
-        // Hapus gambar dari storage (jika ada)
+
         if ($product->main_image_url) {
             Storage::disk('public')->delete($product->main_image_url);
         }
 
-        // Hapus record produk dari database
         $product->delete();
 
-        // Kirim notifikasi Toast
+
         $this->dispatch('success-alert', ['message' => 'Produk berhasil dihapus.']);
         
-        // Bersihkan properti
         $this->itemToDelete = null;
 
     }

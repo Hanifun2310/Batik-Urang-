@@ -54,12 +54,12 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm">
             </div>
         </div>
-        {{-- Akhir Filter Kategori --}}
+
 
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             @forelse ($products as $product)
-                {{-- ... Kode Kartu Produk ... (Sama seperti sebelumnya) --}}
+
                 <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition flex flex-col">
                     <a href="{{ route('products.show', $product->id) }}" wire:navigate class="block">
                         <img src="{{ $product->main_image_url ?? 'https://via.placeholder.com/400x300.png?text=No+Image' }}"
@@ -90,11 +90,10 @@
                 <p class="col-span-full text-center text-gray-500"> Belum ada produk yang cocok ditemukan. </p>
             @endforelse
         </div>
-        {{-- End Grid Produk --}}
 
-        {{-- Link Pagination  --}}
+
         <div class="mt-8">
-            {{ $products->links() }} {{-- Livewire otomatis tangani query string --}}
+            {{ $products->links() }}
         </div>
     </main>
-</div> {{-- Penutup elemen root --}}
+</div> 

@@ -7,19 +7,18 @@
         <div class="bg-white rounded-lg shadow-xl overflow-hidden">
             <div class="lg:flex">
                 <div class="lg:flex-shrink-0">
-                    <!-- [PERBAIKAN FOTO] Menggunakan asset('storage/...') -->
+
                     <img class="h-72 w-full object-cover lg:h-full lg:w-96"
                         src="{{ $product->main_image_url ? asset('storage/' . $product->main_image_url) : 'https://via.placeholder.com/400x300.png?text=No+Image' }}"
                         alt="{{ $product->name }}">
                 </div>
 
-                <div class="p-6 sm:p-8 flex-grow">
+                <div class="p-6 sm:p-8 grow">
                     <h1 class="text-2xl sm:text-3xl font-bold text-amber-900 mb-3 sm:mb-4">{{ $product->name }}</h1>
                     <p class="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 sm:mb-6">
                         Rp {{ number_format($product->price, 0, ',', '.') }}
                     </p>
 
-                    <!-- [PERBAIKAN NOTIFIKASI] Tampilkan Notifikasi (Sukses & Error) -->
                     @if (session('message'))
                         <div
                             class="mb-4 text-green-700 font-semibold border border-green-300 bg-green-50 px-4 py-3 rounded">
@@ -31,7 +30,7 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    <!-- [AKHIR PERBAIKAN NOTIFIKASI] -->
+
 
                     <!-- Stock Info -->
                     <div class="text-sm text-gray-600 mb-6 pb-4 border-b">
@@ -45,9 +44,7 @@
                     <div class="space-y-6">
                         <form wire:submit="addToCart" class="space-y-4">
 
-                            <!-- [PERBAIKAN TOMBOL] Logika Tampilan Tombol Berdasarkan Stok -->
                             @if ($product->stock_quantity > 0)
-                                <!-- JIKA STOK ADA: Tampilkan Input Kuantitas & Tombol Beli -->
                                 <div class="flex items-center space-x-3">
                                     <label for="quantity" class="font-semibold text-gray-700">Jumlah:</label>
                                     <input type="number" id="quantity" wire:model.live="quantity" min="1"
@@ -66,14 +63,14 @@
                                     <span wire:loading wire:target="addToCart">Memproses...</span>
                                 </button>
                             @else
-                                <!-- JIKA STOK HABIS: Tampilkan Tombol Disabled -->
+
                                 <button type="button"
                                     class="w-full bg-gray-400 text-gray-800 font-bold py-3 px-6 rounded-lg opacity-75 cursor-not-allowed"
                                     disabled>
                                     Stok Habis
                                 </button>
                             @endif
-                            <!-- [AKHIR PERBAIKAN TOMBOL] -->
+
 
                         </form>
 

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 #[Layout('components.layouts.app')]
 class Cart extends Component
 {
-    // Properti untuk pesan
+
     public ?string $message = null; 
 
     // saat event 'cart-updated' dipanggil dari komponen lain
@@ -20,7 +20,7 @@ class Cart extends Component
     /**
      * Method untuk menghapus item dari DATABASE
      */
-    public function remove($cartItemId) // Terima ID CartItem, bukan ProductId
+    public function remove($cartItemId) 
     {
         // Cari item di database milik user yang login
         $item = CartItem::where('id', $cartItemId)
@@ -48,7 +48,7 @@ class Cart extends Component
             return;
         }
 
-        // Cari item di database
+
         $item = CartItem::where('id', $cartItemId)
                         ->where('user_id', Auth::id())
                         ->first();
@@ -57,7 +57,6 @@ class Cart extends Component
             $item->quantity = $newQuantity;
             $item->save(); //
             $this->message = 'Kuantitas produk berhasil diperbarui.';
-            // Tidak perlu emit 'cart-updated' karena jumlah item unik tidak berubah
         } else {
              $this->message = 'Produk tidak ditemukan di keranjang.';
         }
@@ -72,16 +71,15 @@ class Cart extends Component
         $cartItems = [];
         $total = 0;
 
-        // Pastikan user sudah login
+
         if (Auth::check()) {
-            // Ambil item keranjang milik user yang login
+
             $cartItems = CartItem::where('user_id', Auth::id())
                                  ->with('product') 
                                  ->get();
             
-            // Hitung total harga
+            // untuk hitung total harga
             foreach ($cartItems as $item) {
-                // Pastikan produk masih ada (tidak terhapus)
                 if ($item->product) { 
                     $total += $item->product->price * $item->quantity;
                 }

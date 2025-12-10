@@ -10,7 +10,7 @@ use Livewire\Attributes\Validate;
 use App\Models\Article;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth; // Pastikan Auth di-import
+use Illuminate\Support\Facades\Auth; 
 use Livewire\Attributes\On;
 
 #[Layout('components.layouts.admin')]
@@ -18,11 +18,11 @@ class ArticleManagement extends Component
 {
     use WithPagination, WithFileUploads;
 
-    // Properti untuk tabel
+
     public $search = '';
     public $perPage = 10;
 
-    // Properti untuk CRUD
+
     public $articleId;
     
     #[Validate('required|min:5|max:255')]
@@ -33,20 +33,16 @@ class ArticleManagement extends Component
     public $content;
     
     #[Validate('nullable|image|max:1024')]
-    public $coverImage; // Properti untuk upload file (temporary)
-    public $oldFeaturedImagePath; // Properti untuk path gambar lama (saat edit)
+    public $coverImage;
+    public $oldFeaturedImagePath; 
     
     #[Validate('required|in:draft,published')]
-    public $status = 'draft'; // Sesuai Model Anda (string), default 'draft'
+    public $status = 'draft'; 
     
-    // Properti Modal
     public $isModalOpen = false;
     public $isEditMode = false;
     
-    // --- PERBAIKAN 1: Tambahkan properti untuk menyimpan ID Hapus ---
     public $itemToDelete = null;
-
-    // FUNGSI: Otomatis generate slug saat title diubah
     public function updatedTitle($value)
     {
         $this->slug = Str::slug($value);
@@ -58,42 +54,39 @@ class ArticleManagement extends Component
         return Article::query()
             ->when($this->search, function ($query) {
                 $query->where('title', 'like', '%'.$this->search.'%')
-                      ->orWhere('content', 'like', '%'.$this->search.'%');
+                    ->orWhere('content', 'like', '%'.$this->search.'%');
             })
             ->latest()
             ->paginate($this->perPage);
     }
     
-    // FUNGSI: Membuka modal untuk Tambah Artikel
     public function create()
     {
-        $this->resetCrudProps(); // Gunakan fungsi reset kustom
+        $this->resetCrudProps();
         $this->isEditMode = false;
         $this->isModalOpen = true;
     }
     
-    // FUNGSI: Membuka modal untuk Edit Artikel
     public function edit(Article $article)
     {
-        $this->resetCrudProps(); // Reset dulu
+        $this->resetCrudProps(); 
         
         $this->articleId = $article->id;
         $this->title = $article->title;
         $this->slug = $article->slug;
         $this->content = $article->content;
-        $this->status = $article->status; // Mengambil 'published' atau 'draft'
-        $this->oldFeaturedImagePath = $article->featured_image_url; // Mengambil path dari Model
+        $this->status = $article->status; 
+        $this->oldFeaturedImagePath = $article->featured_image_url;
         
         $this->isEditMode = true;
         $this->isModalOpen = true;
     }
     
-    // FUNGSI: Simpan atau Update Artikel
     public function store()
     {
         $this->validate();
 
-        $imagePath = $this->oldFeaturedImagePath; // Default path lama
+        $imagePath = $this->oldFeaturedImagePath; 
         
         if ($this->coverImage) {
             if ($this->isEditMode && $this->oldFeaturedImagePath) {
@@ -115,9 +108,8 @@ class ArticleManagement extends Component
             'title' => $this->title,
             'slug' => $slug,
             'content' => $this->content,
-            'featured_image_url' => $imagePath, // Sesuai Model
-            'status' => $this->status, // Sesuai Model
-            // 'user_id' => Auth::id(), // Anda mengomentari ini di Model, jadi saya nonaktifkan
+            'featured_image_url' => $imagePath,
+            'status' => $this->status, 
         ];
 
         if ($this->isEditMode) {
@@ -139,7 +131,6 @@ class ArticleManagement extends Component
         $this->resetCrudProps();
     }
     
-    // FUNGSI: Reset properti form
     private function resetCrudProps()
     {
         $this->resetErrorBag();
@@ -147,17 +138,14 @@ class ArticleManagement extends Component
     }
 
 
-    // --- PERBAIKAN 2: Sesuaikan confirmDelete agar cocok dengan JS Anda ---
-    // FUNGSI: Tampilkan Konfirmasi Hapus ke User
     public function confirmDelete($articleId)
     {
-        $this->itemToDelete = $articleId; // 1. Simpan ID di properti
-        $this->dispatch('show-delete-confirmation'); // 2. Kirim event SEDERHANA (tanpa data)
+        $this->itemToDelete = $articleId; 
+        $this->dispatch('show-delete-confirmation'); 
     }
 
-    // --- PERBAIKAN 3: Sesuaikan delete agar cocok dengan JS Anda ---
-    #[On('delete-confirmed')] // Listener ini sudah benar
-    public function delete() // Hapus parameter $articleId
+    #[On('delete-confirmed')] 
+    public function delete() 
     {
         // 1. Ambil ID dari properti
         $article = Article::find($this->itemToDelete); 
@@ -169,10 +157,9 @@ class ArticleManagement extends Component
             $article->delete();
             $this->dispatch('success-alert', ['message' => 'Artikel berhasil dihapus!']);
         } else {
-             $this->dispatch('success-alert', ['message' => 'Artikel tidak ditemukan atau sudah dihapus.']);
+            $this->dispatch('success-alert', ['message' => 'Artikel tidak ditemukan atau sudah dihapus.']);
         }
         
-        // 2. Reset ID setelah selesai
         $this->itemToDelete = null; 
     }
     

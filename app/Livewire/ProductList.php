@@ -27,10 +27,9 @@ class ProductList extends Component
      */
     public function render()
     {
-        // Mulai query produk
         $productQuery = Product::query()->latest(); 
 
-        // Terapkan filter Kategori 
+
         if (!empty($this->selectedCategory)) {
 
             $category = Category::where('slug', $this->selectedCategory)->first();
@@ -40,22 +39,19 @@ class ProductList extends Component
             }
         }
 
-        // Terapkan filter Pencarian 
         if (!empty($this->searchQuery)) {
             $productQuery->where('name', 'LIKE', '%' . $this->searchQuery . '%');
         }
 
-        // Ambil semua kategori (untuk ditampilkan sebagai filter)
+
         $categories = Category::orderBy('name', 'asc')->get();
 
-        // Ambil hasil produk dengan pagination
         $products = $productQuery->paginate(12);
 
-        // Kirim semua data ke view
+
         return view('livewire.product-list', [
             'products' => $products,
             'categories' => $categories,
-            // 'searchTerm' => $this->searchQuery 
         ]);
     }
 

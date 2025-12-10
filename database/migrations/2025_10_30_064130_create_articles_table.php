@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('articles', function (Blueprint $table) {
-        $table->id(); // ID Artikel
-        $table->string('title'); // Judul Artikel
+        $table->id(); 
+        $table->string('title'); 
         $table->string('slug')->unique(); 
         $table->text('content'); 
         $table->string('featured_image_url')->nullable();

@@ -12,24 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-        $table->uuid('id')->primary(); // ID Pesanan menggunakan UUID
+        $table->uuid('id')->primary();
+        $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+        $table->string('recipient_name'); 
+        $table->string('phone_number');   
+        $table->text('shipping_address'); 
+        $table->decimal('total_amount', 12, 2); 
+        $table->string('payment_method')->default('Transfer Bank Manual');
 
-        // Info Pembeli
-        $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Terhubung ke tabel users
+        $table->string('status')->default('pending'); 
 
-        // Info Alamat (Snapshot saat checkout)
-        $table->string('recipient_name'); // Nama penerima
-        $table->string('phone_number');   // No. HP penerima
-        $table->text('shipping_address'); // Alamat lengkap penerima
-
-        // Info Pembayaran
-        $table->decimal('total_amount', 12, 2); // Total harga pesanan
-        $table->string('payment_method')->default('Transfer Bank Manual'); // Metode pembayaran
-
-        // Info Status Pesanan
-        $table->string('status')->default('pending'); // pending, processing, shipped, completed, cancelled
-
-        $table->timestamps(); // waktu pemesanan
+        $table->timestamps(); 
     });
     }
 

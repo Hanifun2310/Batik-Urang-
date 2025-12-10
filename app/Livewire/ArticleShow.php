@@ -10,10 +10,8 @@ use Livewire\Attributes\Title;
 #[Layout('components.layouts.app')] 
 class ArticleShow extends Component
 {
-    // Properti $title untuk judul tab browser
     public $title; 
 
-    // Properti untuk menyimpan artikel yang sedang dilihat
     public Article $article;
 
     /**
@@ -21,10 +19,6 @@ class ArticleShow extends Component
      */
     public function mount(Article $article)
     {
-        // if ($article->status !== 'published') {
-        //     abort(404);
-        // }
-
         $this->article = $article;
 
         $this->title = $article->title . ' - Batik Urang'; 

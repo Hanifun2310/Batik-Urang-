@@ -123,7 +123,7 @@
                         @enderror
                     </div>
 
-                    {{-- [TAMBAH] Alamat Lengkap --}}
+
                     <div>
                         <label for="address" class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
                         <textarea id="address" wire:model="address" rows="4"
@@ -134,7 +134,6 @@
                         @enderror
                     </div>
 
-                    {{-- Bergabung Sejak --}}
                     <div>
                         <label class="block text-sm font-medium text-gray-500">Bergabung Sejak</label>
                         <p class="mt-1 text-sm text-gray-700">

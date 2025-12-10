@@ -1,4 +1,4 @@
-<div> {{-- Elemen root wajib --}}
+<div> 
     @section('title', 'Artikel Tentang Batik')
 
     <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -38,7 +38,7 @@
                 </p>
             @endforelse
 
-        </div> {{-- End Grid --}}
+        </div> 
 
         <div class="mt-12">
             {{ $articles->links() }}

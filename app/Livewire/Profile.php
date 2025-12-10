@@ -16,7 +16,7 @@ class Profile extends Component
 {
     use WithFileUploads;
 
-    // Properti untuk form edit
+
     public string $name = '';
     public string $email = '';
     public ?string $bio = '';
@@ -25,11 +25,11 @@ class Profile extends Component
     public ?string $phone_number = '';
     public ?string $address = '';
 
-    // Properti untuk ganti password
+
     public string $password = '';
     public string $password_confirmation = '';
 
-    //Properti untuk file foto (tipe mixed agar bisa null/TemporaryUploadedFile)
+
     public $photo;
 
     public function mount()
@@ -42,7 +42,7 @@ class Profile extends Component
         $this->date_of_birth = $user->date_of_birth;
         $this->phone_number = $user->phone_number;
         $this->address = $user->address;
-        // Kita tidak mengisi $this->photo di mount
+
     }
 
     public function updateProfile()
@@ -63,7 +63,7 @@ class Profile extends Component
             'photo' => ['nullable', 'image', 'max:1024'], 
         ]);
 
-        // Update data user (field teks)
+
         $user->name = $this->name;
         $user->email = $this->email;
         $user->bio = $this->bio;
@@ -71,30 +71,24 @@ class Profile extends Component
         $user->date_of_birth = $this->date_of_birth;
         $user->phone_number = $this->phone_number;
         $user->address = $this->address;
-        // [TAMBAH] Proses upload foto jika ada
+
         if ($this->photo) {
-            // Hapus foto lama jika ada
+
             if ($user->profile_photo_path && Storage::disk('public')->exists($user->profile_photo_path)) {
                 Storage::disk('public')->delete($user->profile_photo_path);
             }
-            // Simpan foto baru ke folder 'profile-photos' di 'storage/app/public'
             $path = $this->photo->store('profile-photos', 'public');
-            // Simpan path foto baru ke database
             $user->profile_photo_path = $path;
         }
 
-        // Update password (HANYA JIKA diisi)
         if (!empty($this->password)) {
             $user->password = Hash::make($this->password);
         }
 
-        // Simpan semua perubahan ke database
         $user->save();
 
-        // Reset field password dan photo di form
         $this->reset('password', 'password_confirmation', 'photo');
 
-        // Kirim pesan sukses
         session()->flash('success', 'Profil berhasil diperbarui!');
 
         $this->dispatch('profile-updated'); 

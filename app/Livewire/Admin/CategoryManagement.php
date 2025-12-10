@@ -82,33 +82,30 @@ class CategoryManagement extends Component
     $this->closeModal();
 }
 
-public $itemToDelete = null; // Properti baru untuk menyimpan ID yang akan dihapus
+public $itemToDelete = null; 
 
-    // FUNGSI BARU: Untuk memicu dialog SweetAlert dari Livewire
     public function confirmDelete($id)
     {
-        $this->itemToDelete = $id; // Simpan ID di properti
-        // Kirim event ke JavaScript untuk menampilkan SweetAlert
+        $this->itemToDelete = $id;
+
         $this->dispatch('show-delete-confirmation'); 
     }
 
-    // FUNGSI DELETE LAMA (TAPI DIUBAH MENJADI LISTENER)
-    #[On('delete-confirmed')] // Dijalankan ketika SweetAlert mengonfirmasi hapus
+
+    #[On('delete-confirmed')] 
     public function delete()
     {
-        // Pastikan ID tersedia
+
         if ($this->itemToDelete) {
             Category::destroy($this->itemToDelete);
             
-            // Kirim notifikasi Toast
             $this->dispatch('success-alert', ['message' => 'Kategori berhasil dihapus.']);
             
-            // Bersihkan properti
             $this->itemToDelete = null;
         }
     }
 
-    // --- Fungsi Render ---
+
 
     public function render()
     {
